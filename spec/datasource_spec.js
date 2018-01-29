@@ -2,16 +2,20 @@ import {Datasource} from "../module";
 import Q from "q";
 
 describe('GenericDatasource', function() {
+	console.log("GenericDatasource");
     var ctx = {};
 
     beforeEach(function() {
+    	console.log(ctx);
         ctx.$q = Q;
         ctx.backendSrv = {};
         ctx.templateSrv = {};
         ctx.ds = new Datasource({}, ctx.$q, ctx.backendSrv, ctx.templateSrv);
+        console.log(ctx.ds);
     });
 
     it('should return an empty array when no targets are set', function(done) {
+    	console.log("no targets are set");
         ctx.ds.query({targets: []}).then(function(result) {
             expect(result.data).to.have.length(0);
             done();
@@ -19,6 +23,7 @@ describe('GenericDatasource', function() {
     });
 
     it('should return the server results when a target is set', function(done) {
+    	console.log("a target is set");
         ctx.backendSrv.datasourceRequest = function(request) {
             return ctx.$q.when({
                 _request: request,
@@ -46,6 +51,7 @@ describe('GenericDatasource', function() {
     });
 
     it ('should return the metric results when a target is null', function(done) {
+    	console.log("a target is null");
         ctx.backendSrv.datasourceRequest = function(request) {
             return ctx.$q.when({
                 _request: request,
@@ -74,6 +80,7 @@ describe('GenericDatasource', function() {
     });
 
     it ('should return the metric target results when a target is set', function(done) {
+    	console.log("a target is set");
         ctx.backendSrv.datasourceRequest = function(request) {
             var target = request.data.target;
             var result = [target + "_0", target + "_1", target + "_2"];
@@ -101,6 +108,7 @@ describe('GenericDatasource', function() {
     });
 
     it ('should return the metric results when the target is an empty string', function(done) {
+    	console.log("a target is an empty string");
         ctx.backendSrv.datasourceRequest = function(request) {
             return ctx.$q.when({
                 _request: request,
@@ -129,6 +137,7 @@ describe('GenericDatasource', function() {
     });
 
     it ('should return the metric results when the args are an empty object', function(done) {
+    	console.log("args are an empty object");
         ctx.backendSrv.datasourceRequest = function(request) {
             return ctx.$q.when({
                 _request: request,
@@ -157,6 +166,7 @@ describe('GenericDatasource', function() {
     });
 
     it ('should return the metric target results when the args are a string', function(done) {
+    	console.log("args are a sting");
         ctx.backendSrv.datasourceRequest = function(request) {
             var target = request.data.target;
             var result = [target + "_0", target + "_1", target + "_2"];
@@ -184,6 +194,7 @@ describe('GenericDatasource', function() {
     });
 
     it ('should return data as text and as value', function(done) {
+    	console.log("data as text and as value");
         var result = ctx.ds.mapToTextValue({data: ["zero", "one", "two"]});
 
         expect(result).to.have.length(3);
@@ -197,6 +208,7 @@ describe('GenericDatasource', function() {
     });
 
     it ('should return text as text and value as value', function(done) {
+    	console.log("text as text and value as value");
         var data = [
             {text: "zero", value: "value_0"},
             {text: "one", value: "value_1"},
@@ -216,6 +228,7 @@ describe('GenericDatasource', function() {
     });
 
     it ('should return data as text and index as value', function(done) {
+    	console.log("data as text and index as value");
         var data = [
             {a: "zero", b: "value_0"},
             {a: "one", b: "value_1"},
